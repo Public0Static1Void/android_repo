@@ -13,11 +13,25 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.android.ui.theme.AndroidTheme
 
 class MainActivity : ComponentActivity() {
+
+    enum class Colors(val text:String, val number:Int, val color:Color) {
+        Red("Rojo", 0, Color(255,0,25)),
+        Blue("Azul", 1, Color(0,100,255)),
+        Green("Verde", 2, Color(0, 255,50));
+
+        fun WithAlpha(alpha: Float) : Color {
+            return this.color.copy(alpha = alpha)
+        }
+    }
+    enum class Operation
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -25,27 +39,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     Column(){
-                        val names = listOf("a","b","c")
-
-                        Spacer(modifier = Modifier.height(16.dp))
-                        for (i in 1 .. 5){
-                            PrintOnScreen("b", "null")
-                        }
-
-                        Spacer(modifier = Modifier.height(16.dp))
-                        for (i in names){
-                            PrintOnScreen("b" + i, "null")
-                        }
-
-                        Spacer(modifier = Modifier.height(16.dp))
-                        names.forEach{name ->
-                            PrintOnScreen(name)
-                        }
-
-                        Spacer(modifier = Modifier.height(16.dp))
-                        names.forEachIndexed{index, name ->
-                            PrintOnScreen(name + " " + index.toString())
-                        }
+                        PrintOnScreen(name = "aa", color = Colors.Green)
                     }
                 }
             }
@@ -54,7 +48,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun PrintOnScreen(name: String?, name2: String? = "sale solo", modifier: Modifier = Modifier) {
+fun PrintOnScreen(name: String?, color: MainActivity.Colors, modifier: Modifier = Modifier) {
 
     var xDDDDDDD = "mátame por favor"
 
@@ -62,12 +56,10 @@ fun PrintOnScreen(name: String?, name2: String? = "sale solo", modifier: Modifie
         Log.e("null", "Name is null")
         return
     }
-    val name2 = name2 ?: run {
-        Log.e("null", "Name is null")
-        return
-    }
 
     Text(
-        text = "Hello ${name.uppercase()}" + "$xDDDDDDD"
+        text = "Hello ${name.uppercase()}" + "$xDDDDDDD",
+        color = color.WithAlpha(0.6f),
+        modifier = modifier
     )
 }
