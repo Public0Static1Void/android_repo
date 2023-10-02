@@ -41,10 +41,33 @@ class MainActivity : ComponentActivity() {
                     Column(){
                         PrintOnScreen(name = "aa", color = Colors.Green)
 
-                        var mathFunction: Operations = Operations.Add
-                        var result = mathFunction.operation(2,5)
+                        val an = animals.fox
 
-                        PrintOnScreen(name = result.toString(), color = Colors.Red)
+                        when(an){
+                            animals.dog -> PrintOnScreen(name = "Perro", color = Colors.Blue)
+                            animals.fox -> PrintOnScreen(name = "Zorro", color = Colors.Blue)
+                            animals.panda -> PrintOnScreen(name = "Panda", color = Colors.Blue)
+                        }
+
+                        var fruit: Fruit = Apple()
+
+                        when (fruit){
+                            is Apple ->{
+                                fruit.appleFunc()
+                            }
+                            is Banana ->{
+                                fruit.banFunc()
+                            }
+                            else ->{
+
+                            }
+                        }
+
+                        var text = when (fruit){
+                            is Apple -> { 1 }
+                            is Banana -> { 2 }
+                            else -> 3
+                        }
                     }
                 }
             }
@@ -52,20 +75,19 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-class bt(){
-    var listeners: MutableList<(bt) -> Unit> = mutableListOf()
-    fun AddOnClickListener(OnCLickListenner: (bt) -> Unit){
-        listeners.add(OnCLickListenner)
-    }
-    fun Click(){
-        for (listener in listeners) {
-            listener(this);
-        }
-    }
+enum class animals(){
+    dog, fox, panda
 }
-enum class Operations (val operation: (Int, Int) -> Int){
-    Add({a, b -> a + b}),
-    Substract({a,b -> a - b})
+
+open class Fruit(val name: String = "Fruta genérica"){
+
+}
+
+class Apple() : Fruit("Manzana"){
+    fun appleFunc() {}
+}
+class Banana() : Fruit("Plátano"){
+    fun banFunc() {}
 }
 
 @Composable
