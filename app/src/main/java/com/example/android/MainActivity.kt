@@ -40,11 +40,32 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     Column(){
                         PrintOnScreen(name = "aa", color = Colors.Green)
+
+                        var mathFunction: Operations = Operations.Add
+                        var result = mathFunction.operation(2,5)
+
+                        PrintOnScreen(name = result.toString(), color = Colors.Red)
                     }
                 }
             }
         }
     }
+}
+
+class bt(){
+    var listeners: MutableList<(bt) -> Unit> = mutableListOf()
+    fun AddOnClickListener(OnCLickListenner: (bt) -> Unit){
+        listeners.add(OnCLickListenner)
+    }
+    fun Click(){
+        for (listener in listeners) {
+            listener(this);
+        }
+    }
+}
+enum class Operations (val operation: (Int, Int) -> Int){
+    Add({a, b -> a + b}),
+    Substract({a,b -> a - b})
 }
 
 @Composable
