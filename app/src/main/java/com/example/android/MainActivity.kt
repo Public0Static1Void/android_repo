@@ -1,7 +1,12 @@
 package com.example.android
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -20,89 +25,97 @@ import com.example.android.ui.theme.AndroidTheme
 
 class MainActivity : ComponentActivity() {
 
-    enum class Colors(val text:String, val number:Int, val color:Color) {
-        Red("Rojo", 0, Color(255,0,25)),
-        Blue("Azul", 1, Color(0,100,255)),
-        Green("Verde", 2, Color(0, 255,50));
+    class ButtonsRow(var linearLayout: LinearLayout, val context: Context){
+        var buttons: MutableList<Button> = mutableListOf()
 
-        fun WithAlpha(alpha: Float) : Color {
-            return this.color.copy(alpha = alpha)
+        fun AddButtonToRow(text: String) : Button {
+            var bt = Button(context)
+            bt.text = text
+            bt.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT, 1.0f
+            )
+
+            linearLayout.addView(bt)
+            buttons.add(bt)
+
+            return bt
         }
     }
-    enum class Operation
 
+    class ButtonsGrid(var parent: LinearLayout, val context: Context){
+        val baseLinearLayout: LinearLayout
+        private var rows: MutableList<ButtonsRow> = mutableListOf()
 
+        fun GetRow(index: Int) : ButtonsRow? {
+            if (index >= rows.count() || index < 0){
+                return null
+            }
+
+            return rows[index]
+        }
+
+        init{
+            baseLinearLayout = LinearLayout(context)
+            baseLinearLayout.orientation = LinearLayout.VERTICAL
+
+            parent.addView(baseLinearLayout)
+        }
+        fun AddNewRow(){
+            val linearLayout = LinearLayout(context)
+
+            baseLinearLayout.addView(linearLayout)
+            rows.add(ButtonsRow(linearLayout, context))
+        }
+    }
+
+    val result: TextView by lazy { findViewById(R.id.result) }
+    val buttons_container : LinearLayout by lazy { findViewById(R.id.buttons_container) }
+    var buttonsGrid: MutableList<LinearLayout> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            AndroidTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Column(){
-                        PrintOnScreen(name = "aa", color = Colors.Green)
+        setContentView(R.layout.start_screen)
+        /*
+        val bt = Button(this)
+        bt.text = "Creado"
+        //bt.layoutParams.width = LayoutParams.WRAP_CONTENT
+        bt.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        */
+        result.text = "0"
 
-                        val an = animals.fox
+        //buttons_container.addView(bt)
 
-                        when(an){
-                            animals.dog -> PrintOnScreen(name = "Perro", color = Colors.Blue)
-                            animals.fox -> PrintOnScreen(name = "Zorro", color = Colors.Blue)
-                            animals.panda -> PrintOnScreen(name = "Panda", color = Colors.Blue)
-                        }
+        val btGrid = ButtonsGrid(buttons_container, this)
+        /*
+        btGrid.AddNewRow()
 
-                        var fruit: Fruit = Apple()
+        val bt1 = btGrid.GetRow(0)?.AddButtonToRow("Bt1")
+        bt1?.setOnClickListener{
+            result.text = "1"
+        }
+        val bt2 = btGrid.GetRow(0)?.AddButtonToRow("Bt2")
+        bt2?.setOnClickListener{
+            result.text = "2"
+        }
+ */
 
-                        when (fruit){
-                            is Apple ->{
-                                fruit.appleFunc()
-                            }
-                            is Banana ->{
-                                fruit.banFunc()
-                            }
-                            else ->{
+        var names: MutableList<MutableList<String>> = mutableListOf()
+        names.add(mutableListOf("AC", "()", "%", "/"))
+        names.add(mutableListOf("7", "8", "9", "x"))
+        names.add(mutableListOf("4", "5", "6", "-"))
+        names.add(mutableListOf("1", "2", "3", "+"))
+        names.add(mutableListOf("0", ".", "<-", "="))
+        for (i in names.indices){
+            btGrid.AddNewRow()
 
-                            }
-                        }
+            var row : ButtonsRow? = btGrid.GetRow(i)
 
-                        var text = when (fruit){
-                            is Apple -> { 1 }
-                            is Banana -> { 2 }
-                            else -> 3
-                        }
-                    }
-                }
+            for (j in names[i].indices){
+                row?.AddButtonToRow(names[i][j])
             }
         }
     }
-}
-
-enum class animals(){
-    dog, fox, panda
-}
-
-open class Fruit(val name: String = "Fruta genérica"){
-
-}
-
-class Apple() : Fruit("Manzana"){
-    fun appleFunc() {}
-}
-class Banana() : Fruit("Plátano"){
-    fun banFunc() {}
-}
-
-@Composable
-fun PrintOnScreen(name: String?, color: MainActivity.Colors, modifier: Modifier = Modifier) {
-
-    var xDDDDDDD = "mátame por favor"
-
-    val name = name ?: run {
-        Log.e("null", "Name is null")
-        return
-    }
-
-    Text(
-        text = "Hello ${name.uppercase()}" + "$xDDDDDDD",
-        color = color.WithAlpha(0.6f),
-        modifier = modifier
-    )
 }
