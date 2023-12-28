@@ -8,8 +8,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="¡Hola, mundo!"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/leaves"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="475dp"
+        android:minHeight="300dp"
+        android:src="@drawable/leaves_1_icon_256x256_6s8k6la0" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/start_toolbar"
