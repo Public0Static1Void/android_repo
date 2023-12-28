@@ -5,23 +5,6 @@
     android:orientation="vertical">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/start_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:tooltipText="mmmm"
-        >
-        <ImageView
-            android:id="@+id/btn_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/menu"
-            android:layout_gravity="start|center"
-            android:paddingEnd="16dp"
-            />
-    </androidx.appcompat.widget.Toolbar>
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,9 +13,17 @@
 
     </ImageView>
     <TextView
+        android:id="@+id/user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Tu puta madre"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/user_level"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tu nombre"
         android:gravity="center"
         />
 
