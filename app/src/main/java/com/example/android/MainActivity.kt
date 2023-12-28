@@ -1,6 +1,8 @@
 package com.example.android// com.example.android.MainActivity.kt
 import android.os.Bundle
 import android.view.View
+import android.view.View.OnLayoutChangeListener
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -9,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.android.R
 
 class MainActivity : AppCompatActivity() {
+
+    val menu_button: ImageView by lazy { findViewById<ImageView>(R.id.btn_menu) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.start_screen)
@@ -26,8 +30,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showPopupMenu(view:View){
-        val popupMenu = PopupMenu(this,view)
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean("buttonEnabled", menu_button.isEnabled)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val isButtonEnabled = savedInstanceState.getBoolean("buttonEnabled")
+        menu_button.isEnabled = isButtonEnabled
+    }
+
+
+    private fun showPopupMenu(view: View) {
+        val popupMenu = PopupMenu(this, view)
         popupMenu.inflate(R.menu.menu_settings)
 
         popupMenu.setOnMenuItemClickListener { item ->
@@ -37,11 +53,21 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Configuración seleccionada", Toast.LENGTH_SHORT).show()
                     true
                 }
-                // Otros casos si hay más elementos en el menú
+
+                R.id.action_profile -> {
+                    setContentView(R.layout.profile_layout)
+                    true
+                }
+                // Otras opciones
                 else -> false
             }
         }
 
         popupMenu.show()
+    }
+
+    override fun onBackPressed() {
+        onSaveInstanceState(this)
+        setContentView(R.layout.start_screen)
     }
 }
