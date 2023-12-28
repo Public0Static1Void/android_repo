@@ -67,7 +67,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        onSaveInstanceState(this)
         setContentView(R.layout.start_screen)
     }
 }
