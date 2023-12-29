@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1085152849061:android:50f83555b0627889dc714c",
+        "mobilesdk_app_id": "1:1085152849061:android:8413608f612dea68dc714c",
         "android_client_info": {
-          "package_name": "com.asd.lol"
+          "package_name": "com.example.android"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1085152849061-2d28sr0ah6dagjh7bph2ufhrlctcuqun.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBzPJqPTCjldz4pVIS6_bKa9tBoQCrU65I"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085152849061-2d28sr0ah6dagjh7bph2ufhrlctcuqun.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

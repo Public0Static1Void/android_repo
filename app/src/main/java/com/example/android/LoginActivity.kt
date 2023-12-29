@@ -7,23 +7,10 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricPrompt
-import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.asd.passapp.databinding.ActivityLoginBinding
+import com.example.android.MainActivity
 import com.example.android.R
-import com.google.android.gms.common.server.response.SafeParcelResponse.from
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import java.util.Date.from
 
 class LoginActivity : AppCompatActivity() {
 
@@ -33,7 +20,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth:FirebaseAuth
 
     private var canAuthenticate = false
-    private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,11 +33,6 @@ class LoginActivity : AppCompatActivity() {
     fun forgotPassword(view: View)
     {
         startActivity(Intent(this,ForgotPassActivity::class.java))
-    }
-
-    fun fingerPrint(view: View)
-    {
-        authenticate()
     }
 
     fun register(view: View)
@@ -93,39 +74,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    //intento de usar la huella dactilar
-    private fun setupAuth()
-    {
-        if(BiometricManager.from(this).canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG
-                    or BiometricManager.Authenticators.DEVICE_CREDENTIAL) == BiometricManager.BIOMETRIC_SUCCESS)
-        {
-            canAuthenticate = true
-
-            promptInfo = BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Autentificacion biometrica")
-                .setSubtitle("Autentificate con la huella dactilar")
-                .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG
-                        or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
-                .build()
-        }
-    }
-
-    private fun authenticate()
-    {
-        if(canAuthenticate)
-        {
-            BiometricPrompt(this, ContextCompat.getMainExecutor(this),
-                object: BiometricPrompt.AuthenticationCallback(){
-                    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                        super.onAuthenticationSucceeded(result)
-
-                    }
-                }).authenticate((promptInfo))
-        }
-    }
-
     private fun action()
     {
-        startActivity(Intent(this,MainActivity::class.java))
+        startActivity(Intent(this, MainActivity::class.java))
     }
 }
