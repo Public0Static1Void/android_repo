@@ -17,8 +17,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.asd.passapp.databinding.ActivityLoginBinding
+import com.example.android.R
 import com.google.android.gms.common.server.response.SafeParcelResponse.from
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import java.util.Date.from
 
 class LoginActivity : AppCompatActivity() {

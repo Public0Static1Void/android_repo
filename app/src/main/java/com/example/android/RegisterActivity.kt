@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.android.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference

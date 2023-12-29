@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.example.android.R
 import com.google.firebase.auth.FirebaseAuth
 import org.w3c.dom.Text
 
